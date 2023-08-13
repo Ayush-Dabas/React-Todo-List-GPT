@@ -1,26 +1,60 @@
-import "./App.css";
-import { useState } from "react";
+import React, { useState } from 'react';
 
-function App() {
-  const [newItem, setewItem] = useState("");
-  const [todos, setTodos] = useState([]);
+function TodoList() {
+  const [tasks, setTasks] = useState([]);
+  const [newTask, setNewTask] = useState('');
 
-  function handleSubmit(event) {}
+  const handleTaskChange = (e) => {
+    setNewTask(e.target.value);
+  };
+
+  const handleAddTask = () => {
+    if (newTask.trim() !== '') {
+      setTasks([...tasks, { text: newTask, completed: false }]);
+      setNewTask('');
+    }
+  };
+
+  const handleCheckboxToggle = (index) => {
+    const updatedTasks = [...tasks];
+    updatedTasks[index].completed = !updatedTasks[index].completed;
+    setTasks(updatedTasks);
+  };
+
+  const handleDeleteTask = (index) => {
+    const updatedTasks = tasks.filter((_, i) => i !== index);
+    setTasks(updatedTasks);
+  };
 
   return (
-    <>
-      <h1>To do list</h1>
-      <form className="input-form">
-        <label htmlFor="item">Add a task</label>
-        <input type="text" id="item" />
-        <button>Add task</button>
-      </form>
-      <h2 className="task-list-heading">Tasks</h2>
-      <input type="checkbox" name="Item 1" id="item-1" />
-      <label htmlFor="item-1">Task 1</label>
-      <button className="btn delete-btn">Delete</button>
-    </>
+    <div>
+      <h1>Todo List</h1>
+      <div>
+        <input
+          type="text"
+          value={newTask}
+          onChange={handleTaskChange}
+          placeholder="Enter a new task"
+        />
+        <button onClick={handleAddTask}>Add Task</button>
+      </div>
+      <ul>
+        {tasks.map((task, index) => (
+          <li key={index}>
+            <input
+              type="checkbox"
+              checked={task.completed}
+              onChange={() => handleCheckboxToggle(index)}
+            />
+            <span style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
+              {task.text}
+            </span>
+            <button onClick={() => handleDeleteTask(index)}>Delete</button>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
-export default App;
+export default TodoList;

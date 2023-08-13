@@ -1,6 +1,12 @@
 import "./App.css";
+import { useState } from "react";
 
 function App() {
+  const [newItem, setewItem] = useState("");
+  const [todos, setTodos] = useState([]);
+
+  function handleSubmit(event) {}
+
   return (
     <>
       <h1>To do list</h1>

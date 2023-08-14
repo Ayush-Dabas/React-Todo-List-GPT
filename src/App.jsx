@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import "./App.css";
 
 function TodoList() {
   const [tasks, setTasks] = useState([]);
-  const [newTask, setNewTask] = useState('');
+  const [newTask, setNewTask] = useState("");
 
   const handleTaskChange = (e) => {
     setNewTask(e.target.value);
   };
 
   const handleAddTask = () => {
-    if (newTask.trim() !== '') {
+    if (newTask.trim() !== "") {
       setTasks([...tasks, { text: newTask, completed: false }]);
-      setNewTask('');
+      setNewTask("");
     }
   };
 
@@ -46,7 +47,11 @@ function TodoList() {
               checked={task.completed}
               onChange={() => handleCheckboxToggle(index)}
             />
-            <span style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
+            <span
+              style={{
+                textDecoration: task.completed ? "line-through" : "none",
+              }}
+            >
               {task.text}
             </span>
             <button onClick={() => handleDeleteTask(index)}>Delete</button>
